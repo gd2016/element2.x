@@ -270,11 +270,11 @@ export default {
       this.menu.visible = false;
       this.$refs.input.focus();
     },
-    handleActiveItemChange(value) {
+    handleActiveItemChange(value, index) {
       this.$nextTick(_ => {
         this.updatePopper();
       });
-      this.$emit('active-item-change', value);
+      this.$emit('active-item-change', value, index);
     },
     handleKeydown(e) {
       const keyCode = e.keyCode;

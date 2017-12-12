@@ -149,6 +149,18 @@ export default class TreeStore {
     delete this.nodesMap[node.key];
   }
 
+  getAllCheckedKeys() {
+    const key = this.key;
+    const allNodes = this._getAllNodes();
+    const keys = [];
+    allNodes.forEach((node) => {
+      if (node.disabled || node.checked || node.indeterminate) {
+        keys.push((node.data || {})[key]);
+      }
+    });
+    return keys;
+  }
+
   getCheckedNodes(leafOnly = false) {
     const checkedNodes = [];
     const traverse = function(node) {

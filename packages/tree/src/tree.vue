@@ -147,6 +147,9 @@
       getCheckedNodes(leafOnly) {
         return this.store.getCheckedNodes(leafOnly);
       },
+      getAllCheckedKeys() {
+        return this.store.getAllCheckedKeys();
+      },
       getCheckedKeys(leafOnly) {
         return this.store.getCheckedKeys(leafOnly);
       },

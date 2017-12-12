@@ -37,6 +37,7 @@
         props: {},
         visible: false,
         activeValue: [],
+        index: [],
         value: [],
         expandTrigger: 'click',
         changeOnSelect: false,
@@ -117,14 +118,15 @@
       handleMenuLeave() {
         this.$emit('menuLeave');
       },
-      activeItem(item, menuIndex) {
+      activeItem(item, menuIndex, index) {
         const len = this.activeOptions.length;
         this.activeValue.splice(menuIndex, len, item.value);
+        this.index.splice(menuIndex, len, index);
         this.activeOptions.splice(menuIndex + 1, len, item.children);
         if (this.changeOnSelect) {
           this.$emit('pick', this.activeValue.slice(), false);
         } else {
-          this.$emit('activeItemChange', this.activeValue);
+          this.$emit('activeItemChange', this.activeValue, this.index);
         }
       },
       scrollMenu(menu) {
@@ -178,7 +180,7 @@
         let isFlat = false;
         const menuId = `menu-${this.id}-${ menuIndex}`;
         const ownsId = `menu-${this.id}-${ menuIndex + 1 }`;
-        const items = this._l(menu, item => {
+        const items = this._l(menu, (item, index) => {
           const events = {
             on: {}
           };
@@ -232,7 +234,7 @@
                 hover: 'mouseenter'
               }[expandTrigger];
               const triggerHandler = () => {
-                this.activeItem(item, menuIndex);
+                this.activeItem(item, menuIndex, index);
                 this.$nextTick(() => {
                   // adjust self and next level
                   this.scrollMenu(this.$refs.menus[menuIndex]);
